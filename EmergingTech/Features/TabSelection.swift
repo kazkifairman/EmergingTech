@@ -1,15 +1,18 @@
 //
-//  ContentView.swift
-//  EmergingTech
+//  TabSelection.swift
+//  EmergingTechApp
 //
-//  Created by Innovation Showroom on 24/03/2025.
+//  Created by Innovation Showroom on 20/03/2025.
 //
 
 import SwiftUI
 import RealityKit
 import RealityKitContent
 
-struct ContentView: View {
+
+// keep this to change the tabs later
+
+struct TabSelection: View {
     var body: some View {
         TabView {
             AISection()
@@ -31,6 +34,6 @@ struct ContentView: View {
 }
 
 #Preview(windowStyle: .automatic) {
-    ContentView()
+    TabSelection()
         .environment(AppModel())
 }
