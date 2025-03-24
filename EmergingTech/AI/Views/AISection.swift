@@ -9,8 +9,13 @@ import SwiftUI
 
 struct AISection: View {
     var body: some View {
-        Text("AI Section")
-            .font(.largeTitle)
-            .padding()
+        NavigationView {
+            NavigationLink(destination: AIImmersiveView().edgesIgnoringSafeArea(.all)) {
+                Text("Artificial Intelligence")
+                    .font(.largeTitle)
+                    .padding()
+            }
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }

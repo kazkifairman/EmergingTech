@@ -9,7 +9,7 @@ import SwiftUI
 
 struct QuantumSection: View {
     var body: some View {
-        Text("Quantum Section")
+        Text("Quantum Computing")
             .font(.largeTitle)
             .padding()
     }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DigitalAssetsSection: View {
     var body: some View {
-        Text("Digital Assets Section")
+        Text("Digital Assets")
             .font(.largeTitle)
             .padding()
     }
