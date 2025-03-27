@@ -24,7 +24,7 @@ struct AIImmersiveView: View {
                                     Text("🤖")
                                         .font(.system(size: 50))
                                         .padding()
-                                    Text("AI in Industries")
+                                    Text("AI in Financial Services")
                                         .font(.title)
                                         .multilineTextAlignment(.center)
                                     Text("Explore how AI is changing different industries.")
@@ -57,12 +57,12 @@ struct AIImmersiveView: View {
                                 .cornerRadius(15)
                             }
 
-                            NavigationLink(destination: AIToolsExample()) {
+                            NavigationLink(destination: InfoGenAI()) {
                                 VStack {
                                     Text("🚀")
                                         .font(.system(size: 50))
                                         .padding()
-                                    Text("AI Tools")
+                                    Text("Generative AI")
                                         .font(.title)
                                         .multilineTextAlignment(.center)
                                     Text("Explore simulations and AI-powered tools.")
