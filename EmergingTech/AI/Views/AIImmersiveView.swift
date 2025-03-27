@@ -38,7 +38,7 @@ struct AIImmersiveView: View {
                                 .cornerRadius(15)
                             }
 
-                            NavigationLink(destination: ThreeDGraph()) {
+                            NavigationLink(destination: MachineLearning()) {
                                 VStack {
                                     Text("🧠")
                                         .font(.system(size: 50))
