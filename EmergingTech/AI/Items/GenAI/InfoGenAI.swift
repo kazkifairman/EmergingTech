@@ -91,7 +91,7 @@ struct InfoGenAI: View {
 
                 Spacer()
 
-                NavigationLink(destination: ExampleGenAI()) {
+                NavigationLink(destination: InfoGenAI()) {
                     Text("🖥️ Explore Generative AI in Action")
                         .font(.headline)
                         .padding()
