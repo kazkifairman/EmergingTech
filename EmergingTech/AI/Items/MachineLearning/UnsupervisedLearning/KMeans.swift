@@ -10,7 +10,7 @@ import SwiftUI
 import RealityKit
 import Foundation
 
-struct ThreeDGraph2: View {
+struct KMeans: View {
     
     var meshLarge = MeshResource.generateSphere(radius: 0.011)
     var meshSmall = MeshResource.generateSphere(radius: 0.005)
@@ -86,68 +86,16 @@ struct ThreeDGraph2: View {
                 }
                         
                 
-                print(points)
-                
                 for centroid in centroids {
-                    let modelEntity = point.2
-                    modelEntity.position = point.0
+                    let modelEntity = centroid.2
+                    modelEntity.position = centroid.0
                     
                     //modelEntity.model?.mesh = meshSmall
                     
                     //modelEntity.model?.materials = [redMaterial]
                     content.add(modelEntity)
                 }
-                // Add the sphere to the scene
-                //content.add(sphere)
                 
-                // Create a 3D line (a thin box for simplicity)
-                /*let r: Float = 0.003
-                let l: Float = 1.0
-                let lines = [
-                    ModelEntity(mesh: .generateBox(size: [l, r, r])),
-                    ModelEntity(mesh: .generateBox(size: [r, l, r])),
-                    ModelEntity(mesh: .generateBox(size: [r, r, l]))
-                ]
-                for line in lines {
-                    line.position = SIMD3(0.0, 0.0, 0.0)
-                    line.model?.materials = [SimpleMaterial(color: .blue, isMetallic: false)]
-                    content.add(line)
-                }
-                //line.position = SIMD3(0.00, 0.0, 0.0) // center of the line
-                //content.add(line)
-                
-                let basisX = ModelEntity(mesh: .generateBox(size: [l, r, r]))
-                let basisZ = ModelEntity(mesh: .generateBox(size: [r, r, l]))
-                content.add(basisX)
-                content.add(basisZ)
-                basisX.position = SIMD3(0.0, 0.0, 0.0)
-                basisX.model?.materials = [SimpleMaterial(color: .red, isMetallic: false)]
-                basisZ.position = SIMD3(0.0, 0.0, 0.0)
-                basisZ.model?.materials = [SimpleMaterial(color: .red, isMetallic: false)]
-                basisVectors["X"] = basisX
-                basisVectors["Z"] = basisZ
-                
-                if planeEntity == nil {
-                    let plane = ModelEntity(mesh: .generatePlane(width: 4, depth: 4))
-                    let planeR = ModelEntity(mesh: .generatePlane(width: 4, depth: 4))
-                    
-                    plane.position = SIMD3(0, 0, 0) // Position the plane at the origin
-                    planeR.position = SIMD3(0, 0, 0)
-                    
-                    let material = SimpleMaterial(color: .init(white:1.0, alpha: 0.5), isMetallic: false)
-                    
-                    plane.model?.materials = [material]
-                    planeR.model?.materials = [material]
-                    
-                    planeEntity = plane
-                    planeEntityR = planeR
-                    content.add(plane)
-                    content.add(planeR)
-                }
-                
-                
-                let quaternion = simd_quatf(angle: Float(gradientX), axis: SIMD3(Float(gradientX), Float(rotationAxisY), Float(rotationAxisZ)))
-                */
                 
             }
             .ignoresSafeArea()
