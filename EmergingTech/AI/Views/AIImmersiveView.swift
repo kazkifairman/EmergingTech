@@ -1,90 +1,98 @@
 //
-//  AIImmersiveView.swift
-//  EmergingTech
+// AIImmersiveView.swift
+// EmergingTech
 //
-//  Created by Innovation Showroom on 24/03/2025.
+// Created by InnovationShowroom on 24/03/2025.
 //
 
 import SwiftUI
 
+
 struct AIImmersiveView: View {
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Text("Explore AI Innovations")
                     .font(.largeTitle)
-                    .multilineTextAlignment(.center)
-                    .padding()
+                    .fontWeight(.bold)
+                    .padding(.top, 40)
+
+                Text("Choose a topic to explore:")
+                    .font(.title2)
+                    .foregroundColor(.gray)
+                    .padding(.bottom, 20)
 
                 GeometryReader { geometry in
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 20) {
+                        HStack(spacing: 30) {
                             NavigationLink(destination: InfographicsAI()) {
                                 VStack {
-                                    Text("🤖")
-                                        .font(.system(size: 50))
-                                        .padding()
+                                    Image(systemName: "dollarsign.bank.building")
+                                        .resizable()
+                                        .frame(width: 80, height: 80)
+                                        .padding(.bottom, 10)
                                     Text("AI in Financial Services")
-                                        .font(.title)
-                                        .multilineTextAlignment(.center)
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
                                     Text("Explore how AI is changing different industries.")
-                                        .font(.body)
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
                                         .multilineTextAlignment(.center)
                                         .padding(.horizontal)
                                 }
-                                .padding()
-                                .frame(width: geometry.size.width * 0.7, height: 250)
+                                .frame(width: 200, height: 220)
                                 .background(Color.blue.opacity(0.1))
-                                .cornerRadius(15)
+                                .cornerRadius(20)
                             }
 
                             NavigationLink(destination: MachineLearning()) {
                                 VStack {
-                                    Text("🧠")
-                                        .font(.system(size: 50))
-                                        .padding()
+                                    Image(systemName: "network")
+                                        .resizable()
+                                        .frame(width: 80, height: 80)
+                                        .padding(.bottom, 10)
                                     Text("Machine Learning")
-                                        .font(.title)
-                                        .multilineTextAlignment(.center)
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
                                     Text("Learn about Neural Networks and more.")
-                                        .font(.body)
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
                                         .multilineTextAlignment(.center)
                                         .padding(.horizontal)
                                 }
-                                .padding()
-                                .frame(width: geometry.size.width * 0.7, height: 250)
+                                .frame(width: 200, height: 220)
                                 .background(Color.blue.opacity(0.1))
-                                .cornerRadius(15)
+                                .cornerRadius(20)
                             }
 
                             NavigationLink(destination: InfoGenAI()) {
                                 VStack {
-                                    Text("🚀")
-                                        .font(.system(size: 50))
-                                        .padding()
+                                    Image(systemName: "brain")
+                                        .resizable()
+                                        .frame(width: 80, height: 80)
+                                        .padding(.bottom, 10)
                                     Text("Generative AI")
-                                        .font(.title)
-                                        .multilineTextAlignment(.center)
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
                                     Text("Explore simulations and AI-powered tools.")
-                                        .font(.body)
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
                                         .multilineTextAlignment(.center)
                                         .padding(.horizontal)
                                 }
-                                .padding()
-                                .frame(width: geometry.size.width * 0.7, height: 250)
+                                .frame(width: 200, height: 220)
                                 .background(Color.blue.opacity(0.1))
-                                .cornerRadius(15)
+                                .cornerRadius(20)
                             }
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
                     }
                     .frame(height: 300)
                 }
-                .frame(maxHeight: .infinity)
+
+                Spacer()
             }
-            .frame(maxHeight: .infinity)
+            .padding()
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }

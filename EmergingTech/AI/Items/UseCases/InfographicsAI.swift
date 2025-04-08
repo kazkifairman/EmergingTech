@@ -9,73 +9,49 @@ import SwiftUI
 
 struct InfographicsAI: View {
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                Text("💸 AI in Financial Services")
-                    .font(.system(size: 32, weight: .bold))
+        NavigationStack {
+            VStack {
+                Text("AI in Financial Services")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, 40)
+
+                Text("Discover how AI is transforming the world of finance:")
+                    .font(.title2)
+                    .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
-                    .padding(.top, 30)
+                    .padding(.horizontal)
+                    .padding(.bottom, 20)
 
-                VStack(alignment: .leading, spacing: 15) {
-                    Text("📊 Fraud Detection")
-                        .font(.title2)
-                        .foregroundColor(.blue)
-                        .padding(.top, 10)
+                ScrollView {
+                    VStack(spacing: 30) {
+                        FeatureCard(
+                            icon: "lock.shield",
+                            title: "Fraud Detection",
+                            description: "AI models analyze transactions in real-time to flag suspicious activity and reduce fraud."
+                        )
 
-                    Text("""
-                        AI models analyze large volumes of transaction data to identify suspicious activity. Machine learning algorithms detect \
-                        anomalies and flag potential fraud in real-time, helping financial institutions reduce losses.
-                        """)
-                        .font(.body)
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(12)
+                        FeatureCard(
+                            icon: "chart.line.uptrend.xyaxis",
+                            title: "Algorithmic Trading",
+                            description: "Predictive models make high-speed decisions based on market trends to optimize trades."
+                        )
 
-                    Text("📈 Algorithmic Trading")
-                        .font(.title2)
-                        .foregroundColor(.blue)
-                        .padding(.top, 10)
+                        FeatureCard(
+                            icon: "person.crop.circle.badge.checkmark",
+                            title: "Personalized Banking",
+                            description: "AI-powered assistants provide tailored support and financial recommendations to users."
+                        )
 
-                    Text("""
-                        AI-powered trading systems use predictive analytics to identify trading opportunities. These algorithms make split-second \
-                        decisions based on market data, maximizing profits and minimizing risks.
-                        """)
-                        .font(.body)
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(12)
-
-                    Text("🤖 Personalized Banking")
-                        .font(.title2)
-                        .foregroundColor(.blue)
-                        .padding(.top, 10)
-
-                    Text("""
-                        AI chatbots and virtual assistants provide personalized customer support and financial advice. They analyze user preferences \
-                        and offer tailored recommendations, improving the customer experience.
-                        """)
-                        .font(.body)
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(12)
-
-                    Text("🧠 Risk Management")
-                        .font(.title2)
-                        .foregroundColor(.blue)
-                        .padding(.top, 10)
-
-                    Text("""
-                        AI models assess credit risk and predict loan defaults by analyzing historical data. This helps financial institutions make \
-                        more informed lending decisions and mitigate risks.
-                        """)
-                        .font(.body)
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(12)
+                        FeatureCard(
+                            icon: "exclamationmark.triangle",
+                            title: "Risk Management",
+                            description: "AI helps assess credit risk and predict defaults to support safer lending decisions."
+                        )
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 30)
                 }
-                .padding(.horizontal)
-
-                Spacer()
 
                 NavigationLink(destination: AIFinancial3DView()) {
                     Text("🔍 Explore AI in Finance in 3D")
@@ -89,10 +65,34 @@ struct InfographicsAI: View {
                 }
                 .padding(.bottom, 30)
             }
-            .padding()
         }
-        .navigationTitle("AI Infographics")
     }
 }
 
+struct FeatureCard: View {
+    var icon: String
+    var title: String
+    var description: String
 
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Image(systemName: icon)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.blue)
+                Text(title)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+            }
+
+            Text(description)
+                .font(.body)
+                .foregroundColor(.gray)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(16)
+    }
+}

@@ -12,6 +12,23 @@ struct Clustering: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
+                VStack(spacing: 16) {
+                    Text("🧮")
+                        .font(.system(size: 60))
+                        .padding(.top, 30)
+
+                    Text("Clustering")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+
+                    Text("Discover how unsupervised learning can group data into clusters based on similarities. A simple and powerful way to understand data patterns.")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        .padding(.bottom, 10)
+                }
+
                 Text("🔎 Understanding Clustering Algorithms")
                     .font(.system(size: 32, weight: .bold))
                     .multilineTextAlignment(.center)
@@ -72,6 +89,6 @@ struct Clustering: View {
             }
             .padding()
         }
-        .navigationTitle("Clustering")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -4,7 +4,7 @@
 //
 //  Created by Innovation Showroom on 27/03/2025.
 //
-/*
+
 import SwiftUI
 
 struct ExampleGenAI: View {
@@ -56,16 +56,20 @@ struct ExampleGenAI: View {
     
     func sendMessageToChatGPT() {
         guard !userInput.isEmpty else { return }
+        
+        guard let apiKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] else {
+            aiResponse = "API Key not found."
+            return
+        }
 
-        // let apiKey = ProcessInfo.processInfo.environment("OPENAI_API_KEY")
         let url = URL(string: "https://api.openai.com/v1/chat/completions")!
         let body: [String: Any] = [
-            "model": "gpt-4",
+            "model": "gpt-3.5-turbo",
             "messages": [
                 ["role": "system", "content": "You are a helpful assistant."],
                 ["role": "user", "content": userInput]
             ],
-            "max_tokens": 100
+            "max_tokens": 500
         ]
 
         var request = URLRequest(url: url)
@@ -96,13 +100,19 @@ struct ExampleGenAI: View {
                 }
 
                 do {
-                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                       let choices = json["choices"] as? [[String: Any]],
-                       let message = choices.first?["message"] as? [String: Any],
-                       let content = message["content"] as? String {
-                        aiResponse = content.trimmingCharacters(in: .whitespacesAndNewlines)
-                    } else {
-                        aiResponse = "Failed to parse response."
+                    print(String(data: data, encoding: .utf8) ?? "Invalid data")
+
+                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        if let error = json["error"] as? [String: Any],
+                           let message = error["message"] as? String {
+                            aiResponse = "API Error: \(message)"
+                        } else if let choices = json["choices"] as? [[String: Any]],
+                                  let message = choices.first?["message"] as? [String: Any],
+                                  let content = message["content"] as? String {
+                            aiResponse = content.trimmingCharacters(in: .whitespacesAndNewlines)
+                        } else {
+                            aiResponse = "Unexpected response format."
+                        }
                     }
                 } catch {
                     aiResponse = "Error parsing response."
@@ -113,4 +123,4 @@ struct ExampleGenAI: View {
         // Clear user input after sending
         userInput = ""
     }
-}*/
+}
