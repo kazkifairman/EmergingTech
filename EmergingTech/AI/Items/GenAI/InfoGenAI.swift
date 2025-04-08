@@ -15,19 +15,19 @@ struct InfoGenAI: View {
                 Text("🧠")
                     .font(.system(size: 60))
                     .padding(.top, 30)
-
+                
                 Text("Generative AI")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
-
+                
                 Text("An introduction to the capabilities, promise, concerns, and responsible use of AI that creates.")
                     .font(.title3)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                     .padding(.bottom, 10)
-
+                
                 VStack(spacing: 24) {
                     FeatureCard(
                         icon:"questionmark.circle",
@@ -56,21 +56,28 @@ struct InfoGenAI: View {
                     )
                 }
                 .padding(.horizontal)
-
+                
+                
                 NavigationLink(destination: ExampleGenAI()) {
-                    Text("🖥️ Explore Generative AI in Action")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
-                        .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    NavigationLink(destination: InfoGenAI()) {
+                        
+                        Text("🖥️ Explore Generative AI in Action")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                            .padding(.horizontal)
+                    }
+                    .padding(.bottom, 30)
                 }
-                .padding(.bottom, 30)
+                .padding()
             }
-            .padding()
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
