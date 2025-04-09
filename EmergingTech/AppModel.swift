@@ -1,4 +1,3 @@
-//
 //  AppModel.swift
 //  EmergingTech
 //

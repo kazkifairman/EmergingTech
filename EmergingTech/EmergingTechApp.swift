@@ -14,6 +14,7 @@ struct EmergingTechApp: App {
 
     var body: some Scene {
         WindowGroup {
+            //StartupView()
             ContentView()
                 .environment(appModel)
         }

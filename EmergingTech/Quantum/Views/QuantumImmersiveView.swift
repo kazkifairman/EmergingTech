@@ -1,10 +1,17 @@
+//
+//  QuantumImmersiveView.swift
+//  EmergingTech
+//
+//  Created by Innovation Showroom on 09/04/2025.
+//
+
 import SwiftUI
 
-struct DAImmersiveView: View {
+struct QuantumImmersiveView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Digital Assets")
+                Text("Quantum Computing")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top, 40)
@@ -16,16 +23,36 @@ struct DAImmersiveView: View {
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 30) {
-                        NavigationLink(destination: BlockchainView()) {
+                        NavigationLink(destination: SuperpositionView()) {
                             VStack {
-                                Image(systemName: "cube.box")
+                                Image(systemName: "waveform.path")
                                     .resizable()
                                     .frame(width: 80, height: 80)
                                     .padding(.bottom, 10)
-                                Text("Blockchain")
+                                Text("Superposition")
                                     .font(.title2)
                                     .fontWeight(.semibold)
-                                Text("Learn the foundation of digital assets.")
+                                Text("Learn how particles can be in multiple states at once.")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal)
+                            }
+                            .frame(width: 200, height: 220)
+                            .background(Color.purple.opacity(0.1))
+                            .cornerRadius(20)
+                        }
+
+                        NavigationLink(destination: EntanglementView()) {
+                            VStack {
+                                Image(systemName: "link")
+                                    .resizable()
+                                    .frame(width: 80, height: 80)
+                                    .padding(.bottom, 10)
+                                Text("Entanglement")
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                Text("Discover how particles are linked across space.")
                                     .font(.caption)
                                     .foregroundColor(.gray)
                                     .multilineTextAlignment(.center)
@@ -36,48 +63,27 @@ struct DAImmersiveView: View {
                             .cornerRadius(20)
                         }
 
-                        NavigationLink(destination: CryptocurrencyView()) {
+                        NavigationLink(destination: QubitsView()) {
                             VStack {
-                                Image(systemName: "bitcoinsign.circle")
+                                Image(systemName: "circle.hexagongrid")
                                     .resizable()
                                     .frame(width: 80, height: 80)
                                     .padding(.bottom, 10)
-                                Text("Cryptocurrency")
+                                Text("Qubits")
                                     .font(.title2)
                                     .fontWeight(.semibold)
-                                Text("Understand digital money and tokens.")
+                                Text("Understand the basic unit of quantum information.")
                                     .font(.caption)
                                     .foregroundColor(.gray)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal)
                             }
                             .frame(width: 200, height: 220)
-                            .background(Color.orange.opacity(0.1))
-                            .cornerRadius(20)
-                        }
-
-                        NavigationLink(destination: CBDCsView()) {
-                            VStack {
-                                Image(systemName: "banknote")
-                                    .resizable()
-                                    .frame(width: 80, height: 80)
-                                    .padding(.bottom, 10)
-                                Text("CBDCs")
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
-                                Text("Central Bank Digital Currencies explained.")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal)
-                            }
-                            .frame(width: 200, height: 220)
-                            .background(Color.green.opacity(0.1))
+                            .background(Color.indigo.opacity(0.1))
                             .cornerRadius(20)
                         }
                     }
                     .padding(.horizontal)
-                    
                 }
                 .frame(height: 300)
                 Spacer()
@@ -87,26 +93,21 @@ struct DAImmersiveView: View {
     }
 }
 
-struct BlockchainView: View {
+
+struct SuperpositionView: View {
     var body: some View {
-        Text("Blockchain View")
+        Text("Superposition View")
     }
 }
 
-struct CryptocurrencyView: View {
+struct EntanglementView: View {
     var body: some View {
-        Text("Cryptocurrency View")
+        Text("Entanglement View")
     }
 }
 
-struct CBDCsView: View {
+struct QubitsView: View {
     var body: some View {
-        Text("CBDCs View")
-    }
-}
-
-struct DAImmersiveView_Previews: PreviewProvider {
-    static var previews: some View {
-        DAImmersiveView()
+        Text("Qubits View")
     }
 }
