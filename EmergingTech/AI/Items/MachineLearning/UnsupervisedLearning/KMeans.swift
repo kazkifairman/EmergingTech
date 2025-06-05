@@ -6,6 +6,9 @@
 //  Created by Innovation Showroom on 20/03/2025.
 //
 
+// CLUSTER means the collection of points.
+// CENTROID means the point which the algorithm thinks where the cluster is during runtime.
+
 import SwiftUI
 import RealityKit
 import Foundation
@@ -19,14 +22,23 @@ struct KMeans: View {
     var redMaterial = UnlitMaterial(color: .init(.red))
     var greenMaterial = UnlitMaterial(color: .init(.green))
     
-    @State private var points: [[(SIMD3<Float>, Int, ModelEntity, ModelEntity)]] = [] // [coord, centroid number, 3Dentity, line]
+    @State private var points: [[(SIMD3<Float>, Int, ModelEntity, ModelEntity, Float)]] = [] // [coord, centroid number, 3Dentity, line]
     @State private var centroids: [(SIMD3<Float>, Int, ModelEntity)] = [] // coord, centroid number, 3D entity
     
-    var clusters = 8
-    var pointsPerCluster = 25
+    var clusters = 16
+    var pointsPerCluster = 80
     
     var body: some View {
         VStack {
+            Button(action: {
+                updateCentroids()
+            }) {
+                Text("Press Me")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
             
             RealityView { content in
                 
@@ -35,16 +47,10 @@ struct KMeans: View {
                 // For each point around cluster, normally distribute in 3 dimensions
                     
                 var cluster_positions: [SIMD3<Float>] = []
+                var all_points: [SIMD3<Float>] = []
                 
                 for i in 0...clusters {
 
-                    // Initialise Centroids and Cluster locations
-                    let centroid_position: SIMD3<Float> = [
-                        Float.random(in: -0.2...0.2),
-                        Float.random(in: -0.2...0.2),
-                        Float.random(in: -0.2...0.2)
-                    ]
-                    
                     var cluster_position: SIMD3<Float> = [
                         Float.random(in: -0.2...0.2),
                         Float.random(in: -0.2...0.2),
@@ -59,31 +65,37 @@ struct KMeans: View {
                         ]
                     }
                     
+                    // For each cluster, initialise an amount of points.
+                    var cluster_points: [(SIMD3<Float>, Int, ModelEntity, ModelEntity, Float)] = []
+                    for ii in 0...pointsPerCluster {
+                        
+                        let point_offset: SIMD3<Float> = [
+                            randomNormal()*2.0,
+                            randomNormal()*2.0,
+                            randomNormal()*2.0
+                        ]
+                        
+                        all_points.append(cluster_position + point_offset)
+                        
+                        cluster_points.append((
+                            cluster_position + point_offset,
+                            i,
+                            ModelEntity(mesh: meshSmall, materials: [redMaterial]),
+                            ModelEntity(mesh: .generateBox(size: [0.2, 0.07, 0.07])),
+                            Float(0)
+                        ))
+                        
+                    }
+                    
+                    // Initialise Centroids and Cluster locations
+                    let centroid_position: SIMD3<Float> = all_points.randomElement() ?? [0.0, 0.0, 0.0]
+                    
                     centroids.append((
                         centroid_position,
                         i,
                         ModelEntity(mesh: meshSmall, materials: [greenMaterial])
                     ))
                     cluster_positions.append(cluster_position)
-                    
-                    // For each cluster, initialise an amount of points.
-                    var cluster_points: [(SIMD3<Float>, Int, ModelEntity, ModelEntity)] = []
-                    for ii in 0...pointsPerCluster {
-                        
-                        let point_offset: SIMD3<Float> = [
-                            randomNormal(),
-                            randomNormal(),
-                            randomNormal()
-                        ]
-                        
-                        cluster_points.append((
-                            cluster_position + point_offset,
-                            i,
-                            ModelEntity(mesh: meshSmall, materials: [redMaterial]),
-                            ModelEntity(mesh: .generateBox(size: [0.2, 0.07, 0.07]))
-                        ))
-                        
-                    }
                     
                     points.append(cluster_points)
                 }
@@ -120,6 +132,7 @@ struct KMeans: View {
                         var line = createLine(start: point.0, end: closestCentroid.0)
                         points[i][ii].3 = line
                         content.add(line)
+                        points[i][ii].4 = closestDistance
                         
                     }
                 }
@@ -185,7 +198,7 @@ struct KMeans: View {
         let axis = simd_normalize(direction)
 
         // Create a box with minimal thickness, representing the line
-        let mesh = MeshResource.generateBox(size: [0.002, 0.002, length])
+        let mesh = MeshResource.generateBox(size: [0.0012, 0.0012, length])
         let material = SimpleMaterial(color: .blue, isMetallic: false)
         let lineEntity = ModelEntity(mesh: mesh, materials: [material])
         
@@ -197,10 +210,34 @@ struct KMeans: View {
         return lineEntity
     }
     
+    func updateLine(lineEntity: ModelEntity, start: SIMD3<Float>, end: SIMD3<Float>, originalDistance: Float) {
+        let direction_vector = end - start
+        let length = simd_length(direction_vector)
+        let midPoint = (start + end) / 2.0
+        let axis = simd_normalize(direction_vector)
+        
+        // Assuming original size along Z was 1.0; adjust scale accordingly
+        let scaleFactor = length / (originalDistance)
+        lineEntity.scale = SIMD3<Float>(repeating: 1)
+        lineEntity.scale.z = scaleFactor
+
+        // Set rotation
+        let rotation = simd_quatf(from: [0, 0, 1], to: axis)
+        lineEntity.orientation = rotation
+
+        // Set position
+        lineEntity.position = midPoint
+        
+    }
+    
     func updateCentroids() {
         
-        var centroid_points_groups: [[SIMD3<Float>]] = [[]]
+        var centroid_points_groups: [[SIMD3<Float>]] = []
         var mean_positions: [SIMD3<Float>] = []
+        
+        for (i, _) in centroids.enumerated() {
+            centroid_points_groups.append([])
+        }
         
         for (i, cluster_points_group) in points.enumerated() {
             for (ii, point) in cluster_points_group.enumerated() {
@@ -223,6 +260,37 @@ struct KMeans: View {
         
         for (i, mean_position) in mean_positions.enumerated() {
             centroids[i].0 = mean_position
+        }
+        
+        for centroid in centroids {
+            let modelEntity = centroid.2
+            modelEntity.position = centroid.0
+            //content.add(modelEntity)
+        }
+        
+        for (i, cluster_points_group) in points.enumerated() {
+            for (ii, point) in cluster_points_group.enumerated() {
+                let modelEntity = point.2
+                modelEntity.position = point.0
+                
+                // Determine closest centroid.
+                var closestCentroid = centroids[0]
+                var closestDistance = Float(10000000.0)
+                for centroid in centroids {
+                    let currentDistance = simd_distance(centroid.0, point.0)
+                    if currentDistance < closestDistance {
+                        closestCentroid = centroid
+                        closestDistance = currentDistance
+                    }
+                }
+                
+                let the_current_distance = point.3.scale.z * (point.3.model?.mesh.bounds.extents.z ?? 0.0)
+                
+                points[i][ii].1 = closestCentroid.1
+                updateLine(lineEntity: point.3, start: point.0, end: closestCentroid.0, originalDistance: points[i][ii].4)
+                //points[i][ii].4 = closestDistance
+                
+            }
         }
     }
 
